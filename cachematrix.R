@@ -1,15 +1,40 @@
-## Put comments here that give an overall description of what your
-## functions do
+## makeCacheMatix and cacheSolve work together to set, get, and cache 
+## a matrix and its inverse.
 
-## Write a short comment describing this function
 
-makeCacheMatrix <- function(x = matrix()) {
+## makeCacheMatrix is a function that creates and returns a list of functions for setting,
+## getting, and caching a matrix and its inverse.
 
+makeCacheMatrix <- function(mtx = matrix()) {
+    inv_mtx <- NULL
+    set <- function(new_mtx) {
+        mtx <<- new_mtx
+        inv_mtx <<- NULL
+    }
+    get <- function() mtx
+    setinv_mtx <- function(inverse_mtx) inv_mtx <<- inverse_mtx
+    getinv_mtx <- function() inv_mtx
+    
+    ## Return a list of the functions defined above
+    list(set = set, get = get,
+         setinv_mtx = setinv_mtx,
+         getinv_mtx = getinv_mtx)
 }
 
 
-## Write a short comment describing this function
+## cacheSolve does the work of calculating and creating the inverse of 
+## the matrix.  calls the functions of makeCacheMatrix to get and cache the matrix
+## and its inverse.
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+    ## Return a matrix that is the inverse of 'x'
+    inv_mtx <- x$getinv_mtx()
+    if(!is.null(inv_mtx)) {
+        message("getting cached data")
+        return(inv_mtx)
+    }
+    data <- x$get()
+    inv_mtx <- solve(data)
+    x$setinv_mtx(inv_mtx)
+    inv_mtx
 }
