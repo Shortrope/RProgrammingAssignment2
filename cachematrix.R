@@ -22,9 +22,10 @@ makeCacheMatrix <- function(mtx = matrix()) {
 }
 
 
-## cacheSolve does the work of calculating and creating the inverse of 
-## the matrix.  calls the functions of makeCacheMatrix to get and cache the matrix
+## cacheSolve does the work of calculating the inverse of 
+## the matrix.  It calls the functions of makeCacheMatrix to get and cache the matrix
 ## and its inverse.
+## cacheSolve returns the inverse matrix.
 
 cacheSolve <- function(x, ...) {
     ## Return a matrix that is the inverse of 'x'
